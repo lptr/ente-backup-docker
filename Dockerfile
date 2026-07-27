@@ -24,7 +24,7 @@ ARG ENTE_SHA256
 # Provided automatically by buildx; defaulted for plain `docker build`.
 ARG TARGETARCH=amd64
 
-RUN apk add --no-cache curl tar
+RUN apk add --no-cache curl gnutar
 
 RUN set -eu; \
     ver="${ENTE_RELEASE#cli-}"; \
