@@ -1,0 +1,34 @@
+# Ente photo backup for QNAP Container Station
+services:
+  ente-backup:
+    # Use the latest release of the image
+    image: ghcr.io/lptr/ente-backup-docker:latest
+    container_name: ente-backup
+    restart: unless-stopped
+
+    # Only needed for Container Station's GUI "Terminal" button.
+    # `docker exec -it` over SSH works without them.
+    stdin_open: true
+    tty: true
+
+    environment:
+      # Dead-man's-switch URL from https://healthchecks.io
+      # The wrapper refuses to start if this is unset - running a backup
+      # with no monitoring is worse than not running it, because it
+      # manufactures confidence.
+      HC_URL: "https://hc-ping.com/REPLACE-ME"
+      # Seconds between the END of one export and the START of the next
+      INTERVAL: "3600"
+
+    volumes:
+      # CLI database + credentials. Small, but contains SECRETS - keep it
+      # off any share you expose broadly.
+      - /share/Container/ente/config:/cli-data
+      # Where your photos land. Needs to be big.
+      - /share/Multimedia/Photos/Ente:/cli-export
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
