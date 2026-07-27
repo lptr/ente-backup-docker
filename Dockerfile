@@ -65,7 +65,7 @@ COPY ente-backup.sh /usr/local/bin/ente-backup
 
 RUN chmod +x /usr/local/bin/ente-backup \
     && mkdir -p /cli-data /cli-export \
-    && out="$(/usr/bin/ente --help 2>&1 || true)"; \
+    && out="$(/usr/bin/ente help 2>&1 || true)"; \
        case "${out}" in \
          *"not found"*|*"cannot open shared object"*|*"No such file or directory"*) \
            echo "${out}"; \

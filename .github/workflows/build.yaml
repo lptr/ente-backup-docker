@@ -83,7 +83,7 @@ jobs:
           IMAGE=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
           echo "Testing $IMAGE"
           # The CLI must run...
-          docker run --rm --entrypoint /usr/bin/ente "$IMAGE" --help
+          docker run --rm --entrypoint /usr/bin/ente "$IMAGE" help
           # ...and curl must actually execute, not just exist.
           # This is the check that would have caught the GLIBC breakage.
           docker run --rm --entrypoint curl "$IMAGE" --version
